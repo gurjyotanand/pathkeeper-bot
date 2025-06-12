@@ -1,6 +1,9 @@
 import os
 import json
 from datetime import datetime
+from zoneinfo import ZoneInfo
+
+
 import random # Import the random module
 
 # Import crewai components
@@ -16,20 +19,19 @@ JSON_PATH = "japji_sahib_full.json" # This file must be in your deployment packa
 # --- Helper Functions ---
 
 def select_task():
-    # Use timezone-aware datetime if your Lambda is not in the same timezone
-    # as your target audience, or if running daily.
-    # For simplicity, assuming Lambda's timezone is sufficient here.
-    hour = datetime.now().hour
+    # Use Toronto timezone regardless of where this runs
+    hour = datetime.now(ZoneInfo("America/Toronto")).hour
     if 5 <= hour < 12:
         return "morning", morning_task
     elif 14 <= hour < 16:
         return "noon", noon_task
-    elif 18 <= hour < 20: # Evening logic
-        return "evening", None # 'evening' now triggers the random pauri
-    elif 22 <= hour <= 23: # Night logic
+    elif 18 <= hour < 20:
+        return "evening", None
+    elif 22 <= hour <= 23:
         return "night", night_task
     else:
         return None, None
+
 
 def get_random_pauri():
     """Retrieves a random pauri from the JSON file."""
