@@ -1,0 +1,17 @@
+# Environment variables (contains sensitive API keys)
+.env
+
+# Python specific ignores
+__pycache__/
+*.pyc
+*.log
+venv/ # If you create a virtual environment named 'venv'
+.python_history
+.pytest_cache/
+
+# Ollama specific (if still running locally)
+.ollama/
+
+# Operating System specific
+.DS_Store # macOS
+Thumbs.db # Windows
