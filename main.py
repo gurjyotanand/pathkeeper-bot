@@ -1,98 +1,110 @@
-from crewai import Crew
+import os
+import json
+from datetime import datetime
+import random # Import the random module
+
+# Import crewai components
+from crewai import Crew, Agent, Task # Assuming Agent and Task are used
+
+# Import your local modules
 from tasks import morning_task, noon_task, night_task
 from utils import send_telegram_message
-from datetime import datetime
-import json
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
+# --- Constants ---
+JSON_PATH = "japji_sahib_full.json" # This file must be in your deployment package root
+
+# --- Helper Functions ---
 
 def select_task():
+    # Use timezone-aware datetime if your Lambda is not in the same timezone
+    # as your target audience, or if running daily.
+    # For simplicity, assuming Lambda's timezone is sufficient here.
     hour = datetime.now().hour
-    if 8 <= hour < 11:
+    if 5 <= hour < 12:
         return "morning", morning_task
     elif 14 <= hour < 16:
         return "noon", noon_task
-    elif 17 <= hour <19:
-        return "evening", None
-    elif 2 <= hour <= 22:
+    elif 18 <= hour < 20: # Evening logic
+        return "evening", None # 'evening' now triggers the random pauri
+    elif 22 <= hour <= 23: # Night logic
         return "night", night_task
     else:
         return None, None
 
-def get_current_pauri():
-    JSON_PATH = "japji_sahib_full.json"
-    ENV_PATH = ".env"
-    TOTAL_PAURIS = 41  # Update based on actual pauri count
+def get_random_pauri():
+    """Retrieves a random pauri from the JSON file."""
+    try:
+        with open(JSON_PATH, "r", encoding="utf-8") as f:
+            pauris = json.load(f)
+    except FileNotFoundError:
+        print(f"Error: {JSON_PATH} not found in the deployment package.")
+        send_telegram_message(f"Error: Japji Sahib JSON file not found in Lambda. Please check deployment.")
+        raise
 
-    with open(JSON_PATH, "r", encoding="utf-8") as f:
-        pauris = json.load(f)
-
-    current_index = int(os.getenv("DAILY_PAURI_INDEX", 0))
-    pauri = pauris[current_index]
+    # Select a random pauri
+    random_pauri = random.choice(pauris)
 
     text = f"""
-🌙 **Pauri {pauri['pauri_number']} – Japji Sahib Reflection**
+🌙 **Pauri {random_pauri['pauri_number']} – Japji Sahib Reflection**
 
 📜 **Punjabi**:
-{pauri['pauri_punjabi']}
+{random_pauri['pauri_punjabi']}
 
 🔤 **Transliteration**:
-{pauri['transliteration']}
+{random_pauri['transliteration']}
 
 🌍 **Translation**:
-{pauri['translation']}
+{random_pauri['translation']}
 
 🧘 **Simple Explanation**:
-{pauri['explanation']}
+{random_pauri['explanation']}
     """.strip()
-
-    # Update the index for tomorrow
-    next_index = (current_index + 1) % TOTAL_PAURIS
-    _update_env_variable("DAILY_PAURI_INDEX", str(next_index), ENV_PATH)
 
     return text
 
-def _update_env_variable(key, value, env_path):
-    with open(env_path, "r") as f:
-        lines = f.readlines()
-
-    found = False
-    for i, line in enumerate(lines):
-        if line.startswith(f"{key}="):
-            lines[i] = f"{key}={value}\n"
-            found = True
-            break
-    if not found:
-        lines.append(f"{key}={value}\n")
-
-    with open(env_path, "w") as f:
-        f.writelines(lines)
-
 def run_ai_agent():
-    label, task = select_task()
+    label, task_obj = select_task()
     if label:
         print(f"Running task for: {label}")
 
         if label == "evening":
-            message = get_current_pauri()
+            # Evening task now gets a random pauri
+            message = get_random_pauri()
             print("Generated Message:\n", message)
             send_telegram_message(message)
             return
 
         # Default agent task for morning/noon/night
-        crew = Crew(
-            agents=[task.agent],
-            tasks=[task],
-            verbose=True
-        )
-        result_object = crew.kickoff()
-        generated_message = result_object.raw
-        print("Generated Message:\n", generated_message)
-        send_telegram_message(generated_message)
+        if task_obj and hasattr(task_obj, 'agent'):
+            crew = Crew(
+                agents=[task_obj.agent],
+                tasks=[task_obj],
+                verbose=True
+            )
+            result_object = crew.kickoff()
+            generated_message = result_object.raw
+            print("Generated Message:\n", generated_message)
+            send_telegram_message(generated_message)
+        else:
+            print(f"No valid agent or task found for {label}. Skipping AI agent run.")
+
     else:
         print("Nothing to do at this hour.")
 
+# --- AWS Lambda Handler ---
+def handler(event, context):
+    """
+    The main entry point for the AWS Lambda function.
+    """
+    print("Lambda function invoked!")
+    run_ai_agent()
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Bot execution completed successfully!')
+    }
+
+# This part is only for local testing, won't run in Lambda
 if __name__ == "__main__":
+    print("Running locally (not in Lambda)...")
     run_ai_agent()
