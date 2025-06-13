@@ -41,6 +41,6 @@ night_task = Task(
     agent=evening_motivator, # Renamed the agent to fit the new role
     expected_output=(
         "A multi-point evening message including a daily check-in, gratitude prompt, "
-        "journaling encouragement, a positive affirmation of future success, an uplifting quote "
+        "journaling encouragement, a positive affirmation of future success, an uplifting quote. Should be drafted as you are mentor not email. "
     )
 )
