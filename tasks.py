@@ -28,19 +28,19 @@ noon_task = Task(
 
 night_task = Task(
     description=(
-        "**Craft a personalized reflection message for an aspiring entrepreneur.** "
-        "The message should cover the following points:\n\n"
-        "1.  **Check-in:** Ask about their day, specifically if it was productive.\n"
-        "2.  **Gratitude:** Include a prompt for gratitude, encouraging reflection on positive aspects.\n"
-        "3.  **Journaling Prompt:** Encourage journaling about the day's events and planning for tomorrow.\n"
-        "4.  **Affirmation of Success:** Offer a positive affirmation about future success/wealth.\n"
-        "5.  **Positive Quote:** Include a short, uplifting quote that inspires a positive vibe.\n"
-        "6.  **Spiritual Acknowledgment:** Conclude with a note of thanks to a higher power/God..\n\n"
-        "Keep it short. Ensure the tone is supportive, encouraging, and geared towards someone on an entrepreneurial journey, fostering a sense of peace and motivation."
+        "**Craft a personalized, deeply inspiring, and reflective evening message for an aspiring entrepreneur, Gurjyot.** "
+        "The message should feel like a direct, empathetic conversation from a seasoned mentor, designed to help Gurjyot unwind, reflect, and prepare for tomorrow's challenges with renewed vigor. "
+        "The flow should be organic, not like a checklist, weaving together these elements seamlessly:\n\n"
+        "1.  **Personal Check-in:** Begin with a warm, genuine inquiry about Gurjyot's day, specifically focusing on productivity and progress, acknowledging both wins and challenges without dwelling on negatives.\n"
+        "2.  **Guided Gratitude:** Transition smoothly into a specific, thought-provoking prompt for gratitude that encourages deep reflection on what went well or positive lessons learned today. Avoid generic 'three things' lists; inspire a singular, impactful reflection.\n"
+        "3.  **Actionable Journaling & Planning:** Encourage journaling not just about the day, but explicitly link it to strategic planning for tomorrow. Emphasize that journaling is a tool for clarity and execution, not just reflection. Guide him to identify ONE pivotal action for tomorrow.\n"
+        "4.  **Powerful Affirmation & Future Vision:** Provide a potent, concise affirmation that reinforces his entrepreneurial path and future success. This should feel like a direct declaration of his potential, inspiring confidence and wealth attraction.\n"
+        "5.  **Unique Uplifting Quote:** Integrate a short, impactful, and less common motivational quote that resonates with themes of perseverance, vision, or inner strength. Ensure it's fresh each time.\n"
+        "6.  **Heartfelt Spiritual Acknowledgment:** Conclude with a brief, sincere expression of thanks to a higher power/God for guidance and opportunity, fostering a sense of peace and divine support.\n\n"
+        "**Crucially, the tone must be:** Supportive, profound, direct, and deeply personal. Avoid bullet points, numbered lists, or overly formal language. Make it feel like a single, flowing message. Do NOT use phrases like 'three things' or 'grab your journal'. Instead, weave these actions into natural language."
     ),
-    agent=evening_motivator, # Renamed the agent to fit the new role
+    agent=evening_motivator,
     expected_output=(
-        "A multi-point evening message including a daily check-in, gratitude prompt, "
-        "journaling encouragement, a positive affirmation of future success, an uplifting quote. Should be drafted as you are mentor not email. "
+        "A cohesive, personalized, and highly motivational evening message for Gurjyot, flowing naturally from a check-in to gratitude, strategic planning, a powerful affirmation, a unique uplifting quote, and a spiritual acknowledgment. The tone must be that of a direct, empathetic, and wise mentor, inspiring peace and continued drive. The message should be a single block of text, without bullet points or numbered lists."
     )
 )
