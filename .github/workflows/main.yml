@@ -3,6 +3,7 @@ name: Pathkeeper Daily Bot
 on:
   schedule:
     # Times in UTC — adjust to your local timezone
+    - cron: "*/5 * * * *"  # Every 5 minutes
     - cron: "00 15 * * *"  # 11 AM Toronto time
     - cron: "00 19 * * *"  # 3 PM Toronto time
     - cron: "00 23 * * *"  # 7 PM Toronto time
