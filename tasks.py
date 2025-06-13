@@ -28,20 +28,19 @@ noon_task = Task(
 
 night_task = Task(
     description=(
-        "**Craft a personalized evening reflection message for an aspiring entrepreneur.** "
+        "**Craft a personalized reflection message for an aspiring entrepreneur.** "
         "The message should cover the following points:\n\n"
-        "1.  **Check-in:** Ask about their day, specifically if it was productive. (e.g., 'How was your day, Gurjyot? Was it productive?').\n"
-        "2.  **Gratitude:** Include a prompt for gratitude, encouraging reflection on positive aspects. (e.g., 'Take a moment to reflect on what you're grateful for today.').\n"
-        "3.  **Journaling Prompt:** Encourage journaling about the day's events and planning for tomorrow. (e.g., 'Before you sleep, journal about your day's experiences and outline your plans for tomorrow.').\n"
-        "4.  **Affirmation of Success:** Offer a positive affirmation about future success/wealth. (e.g., 'Remember, you are on the path to becoming incredibly successful.').\n"
+        "1.  **Check-in:** Ask about their day, specifically if it was productive.\n"
+        "2.  **Gratitude:** Include a prompt for gratitude, encouraging reflection on positive aspects.\n"
+        "3.  **Journaling Prompt:** Encourage journaling about the day's events and planning for tomorrow.\n"
+        "4.  **Affirmation of Success:** Offer a positive affirmation about future success/wealth.\n"
         "5.  **Positive Quote:** Include a short, uplifting quote that inspires a positive vibe.\n"
-        "6.  **Spiritual Acknowledgment:** Conclude with a note of thanks to a higher power/God. (e.g., 'Thank God for all the blessings.').\n\n"
-        "Keep it short. Ensure the tone is supportive, encouraging, and geared towards someone on an entrepreneurial journey, fostering a sense of peace and motivation before sleep."
+        "6.  **Spiritual Acknowledgment:** Conclude with a note of thanks to a higher power/God..\n\n"
+        "Keep it short. Ensure the tone is supportive, encouraging, and geared towards someone on an entrepreneurial journey, fostering a sense of peace and motivation."
     ),
     agent=evening_motivator, # Renamed the agent to fit the new role
     expected_output=(
         "A multi-point evening message including a daily check-in, gratitude prompt, "
-        "journaling encouragement, a positive affirmation of future success, an uplifting quote, "
-        "and a note of thanks to a higher power."
+        "journaling encouragement, a positive affirmation of future success, an uplifting quote "
     )
 )
