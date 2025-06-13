@@ -8,7 +8,6 @@ on:
     - cron: "00 19 * * *"  # 3 PM Toronto time
     - cron: "00 23 * * *"  # 7 PM Toronto time
     - cron: "00 03 * * *"  # 11 PM Toronto time
-  workflow_dispatch: # Allow manual trigger too
 
 jobs:
   run-bot:
